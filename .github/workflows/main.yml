@@ -1,0 +1,30 @@
+name: Build HookCase
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build HookCase Kext
+      run: |
+        xcodebuild -project HookCase.xcodeproj \
+                   -scheme HookCase \
+                   -configuration Release \
+                   -derivedDataPath build \
+                   CODE_SIGNING_ALLOWED=NO \
+                   CODE_SIGN_IDENTITY="" \
+                   CODE_SIGNING_REQUIRED=NO
+
+    - name: Upload Build
+      uses: actions/upload-artifact@v4
+      with:
+        name: HookCase-Release
+        path: build/Build/Products/Release/
