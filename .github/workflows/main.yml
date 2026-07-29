@@ -14,6 +14,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Build HookCase Kext
+      working-directory: ./HookCase-master
       run: |
         xcodebuild -project HookCase.xcodeproj \
                    -scheme HookCase \
@@ -27,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: HookCase-Release
-        path: build/Build/Products/Release/
+        path: HookCase-master/build/Build/Products/Release/
